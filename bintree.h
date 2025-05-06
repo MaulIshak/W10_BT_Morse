@@ -35,12 +35,12 @@ typedef address1 ListOfNode;
 
 /**** Primitif *****/
 /* Selektor */
-infotype GetAkar (BinTree P);
-/* Mengirimkan informasi yang tersimpan di akar dari pohon Biner yg tdk kosong*/
-BinTree GetLeft (BinTree P);
-/* Mengirimkan anak kiri pohon biner P yang TIDAK kosong */
-BinTree GetRight (BinTree P);
-/* Mengirimkan anak kanan pohon biner P yang TIDAK kosong */
+// infotype GetAkar (BinTree P);
+// /* Mengirimkan informasi yang tersimpan di akar dari pohon Biner yg tdk kosong*/
+// BinTree GetLeft (BinTree P);
+// /* Mengirimkan anak kiri pohon biner P yang TIDAK kosong */
+// BinTree GetRight (BinTree P);
+// /* Mengirimkan anak kanan pohon biner P yang TIDAK kosong */
 
 /* Konstruktor */
 address Alokasi (infotype X);
@@ -98,19 +98,19 @@ int nbElmt (BinTree P);
 /* Mengirimkan banyak elemen (node) pohon biner P */
 int nbDaun (BinTree P);
 /* Mengirimkan banyak daun (node) pohon biner P */
-boolean IsSkewLeft (BinTree P);
-/* Mengirimkan true jika P adalah pohon condong kiri */
-boolean IsSkewRight (BinTree P);
-/* Mengirimkan true jika P adalah pohon condong kanan */
-int Level (BinTree P, infotype X);
-/* Mengirimkan level dari node X yang merupakan salah satu simpul dari */
-/* pohon biner P. Akar (P) levelnya adalah 1. Pohon tidak kosong */
-int Depth (BinTree P);
-/* Pohon Biner mungkin Kosong, mengirimkan 'depth' yaitu tinggi dari Pohon */
-/* Basis : Pohon Kosong, tingginya Nol */
-/* Rekurens : 1 + maksimal (Depth (Anak Kiri), Depth  (Anak Kanan)) */
-int Max (infotype Data1, infotype Data2);
-/* Mengirimkan Nilai terbesar dari dua data */
+// boolean IsSkewLeft (BinTree P);
+// /* Mengirimkan true jika P adalah pohon condong kiri */
+// boolean IsSkewRight (BinTree P);
+// /* Mengirimkan true jika P adalah pohon condong kanan */
+// int Level (BinTree P, infotype X);
+// /* Mengirimkan level dari node X yang merupakan salah satu simpul dari */
+// /* pohon biner P. Akar (P) levelnya adalah 1. Pohon tidak kosong */
+// int Depth (BinTree P);
+// /* Pohon Biner mungkin Kosong, mengirimkan 'depth' yaitu tinggi dari Pohon */
+// /* Basis : Pohon Kosong, tingginya Nol */
+// /* Rekurens : 1 + maksimal (Depth (Anak Kiri), Depth  (Anak Kanan)) */
+// int Max (infotype Data1, infotype Data2);
+// /* Mengirimkan Nilai terbesar dari dua data */
   
 /***** Operasi Lain *****/
 void AddDaunTerkiri (BinTree *P, infotype X);
@@ -147,7 +147,7 @@ ListOfNode MakeListLevel (BinTree P, int N);
 /*       		menghasilkan list kosong jika ada alokasi yang gagal */
 
 /***** Membentuk Balanced Tree *****/
-BinTree BuildBalanceTree (int N);
+// BinTree BuildBalanceTree (int N);
 /* Menghasilkan sebuah balance Tree dengan N Node, nilai setiap node dibaca */
 
 /***** Operasi untuk Binary Search Tree *****/
