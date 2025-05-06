@@ -67,9 +67,9 @@ boolean IsUnerLeft (BinTree P);
 boolean IsUnerRight (BinTree P);
 /* Mengirimkan true jika BinTree tidak kosong */
 /* P adalah pohon UnerRight (hanya mempunyai sub pohon kanan */
-boolean IsBiner (BinTree P);
-/* Mengirimkan true jika BinTree tidak kosong */
-/* P adalah pohon Biner (mempunyai sub pohon kiri dan sub pohon kanan */
+// boolean IsBiner (BinTree P);
+// /* Mengirimkan true jika BinTree tidak kosong */
+// /* P adalah pohon Biner (mempunyai sub pohon kiri dan sub pohon kanan */
 boolean IsEmpty (BinTree P);
 /* Mengirimkan true jika BinTree KOSONG */
 /***** Traversal *****/
@@ -96,8 +96,8 @@ boolean Search (BinTree P, infotype X);
 /***** Fungsi Lain *****/
 int nbElmt (BinTree P);
 /* Mengirimkan banyak elemen (node) pohon biner P */
-int nbDaun (BinTree P);
-/* Mengirimkan banyak daun (node) pohon biner P */
+// int nbDaun (BinTree P);
+// /* Mengirimkan banyak daun (node) pohon biner P */
 // boolean IsSkewLeft (BinTree P);
 // /* Mengirimkan true jika P adalah pohon condong kiri */
 // boolean IsSkewRight (BinTree P);
@@ -111,7 +111,7 @@ int nbDaun (BinTree P);
 // /* Rekurens : 1 + maksimal (Depth (Anak Kiri), Depth  (Anak Kanan)) */
 // int Max (infotype Data1, infotype Data2);
 // /* Mengirimkan Nilai terbesar dari dua data */
-  
+
 /***** Operasi Lain *****/
 void AddDaunTerkiri (BinTree *P, infotype X);
 /* Menambah elemen Tree di cabang Kiri dengan alokasi baru */

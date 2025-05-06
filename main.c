@@ -3,6 +3,11 @@
 
 int main()
 {
-  printf("Halo\n");
+  BinTree tree = NULL;
+  BuildTree(&tree);
+
+  PrintTree(tree, 5);
+
+  
   return 0;
 }
