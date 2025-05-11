@@ -115,3 +115,31 @@ boolean Search (BinTree P, infotype X){
 
 /***** Fungsi Lain *****/
 int nbElmt (BinTree P);
+
+/* Menambah elemen Tree di cabang Kiri dengan alokasi baru */
+/* IS : P boleh kosong */
+/* FS : P bertambah simpulnya, dengan X sebagai simpul daun terkiri */
+void AddDaunTerkiri (BinTree *P, infotype X) {
+  if (*P == NULL) {
+    *P = Alokasi(X);
+  } else {
+    AddDaunTerkiri(&Left(*P), X);
+  }
+}
+
+/* IS : P TIDAK Kosong */
+/* FS : P dihapus daun terkirinya, dan didealokasi, dengan X adalah info */
+/*      yang semula disimpan pada daun terkiri yang dihapus */
+void DelDaunTerkiri (BinTree *T, infotype *X) {
+  address P;
+  if (*T != NULL) {
+    if (Left(*T) == NULL) {
+      *X = Info(*T);
+      P = *T;
+      *T = Right(*T);
+      DeAlokasi(P);
+    } else {
+      DelDaunTerkiri(&Left(*T), X);
+    }
+  }
+}
