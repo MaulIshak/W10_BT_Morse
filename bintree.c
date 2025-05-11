@@ -59,8 +59,6 @@ void PreOrder (BinTree P) {
     printf("%d ", Info(P));
     PreOrder(Left(P));
     PreOrder(Right(P));
-  }else{
-    printf("Tree kosong\n");
   }
 }
 
@@ -72,8 +70,6 @@ void InOrder (BinTree P){
     InOrder(Left(P));
     printf("%d ", Info(P));
     InOrder(Right(P));
-  }else{
-    printf("Tree kosong\n");
   }
 }
 /* Traversal PostOrder menggunakan Rekursif */
@@ -84,21 +80,39 @@ void PostOrder (BinTree P){
     PostOrder(Left(P));
     PostOrder(Right(P));
     printf("%d ", Info(P));
-  }else{
-    printf("Tree kosong\n");
   }
 }
 /* IS : P terdefinisi, h adalah jarak indentasi */
 /* FS : Semua simpul P sudah ditulis dengan indentasi */
 void PrintTree (BinTree P, int h){
-  if (P != NULL) {
-    PrintTree(Right(P), h + 1);
-    for (int i = 0; i < h; i++) {
-      printf("   ");
+    (void) h;
+    int jmlNode = nbElmt(P);
+    BinTree *queue =(BinTree*)malloc(sizeof(Node)*jmlNode);
+    int front = 0, rear = 0;
+    queue[rear++] = P;
+    while (front < rear) {
+        BinTree current = queue[front++];
+        printf("info node: %c \n", Info(current));
+        if (Left(current) != NULL) {
+            printf("info node left son: %c \n", Info(Left(current)));
+        }
+        else {
+            printf("info node left son: (kosong) \n");
+        }
+        if (Right(current) != NULL) {
+            printf("info node right son: %c \n\n", Info(Right(current)));
+        }
+        else {
+            printf("info node left son: (kosong) \n\n");
+        }
+        if (Left(current) != NULL) {
+            queue[rear++] = Left(current);
+        }
+        if (Right(current) != NULL) {
+            queue[rear++] = Right(current);
+        }
     }
-    printf("%d\n", Info(P));
-    PrintTree(Left(P), h + 1);
-  }
+    printf("\n");
 }
 
 /***** Search *****/
@@ -114,4 +128,80 @@ boolean Search (BinTree P, infotype X){
 /* Mengirimkan true jika ada node dari P yang bernilai X */
 
 /***** Fungsi Lain *****/
-int nbElmt (BinTree P);
+int nbElmt (BinTree P){
+  int count = 0;
+  if (P != NULL) {
+    count++;
+    nbElmt(Left(P));
+    nbElmt(Right(P));
+  }
+
+  return count;
+}
+
+
+/* Mengirimkan level dari node X yang merupakan salah satu simpul dari */
+/* pohon biner P. Akar (P) levelnya adalah 1. Pohon tidak kosong */
+int Level (BinTree P, infotype X){
+  if(P == NULL) return 0;
+  if(P->info == X) return 1;
+  int left = Level(Left(P), X);
+  if (left > 0) {
+    return left + 1;
+  }
+  int right = Level(Right(P), X);
+  if (right > 0) {
+    return right + 1;
+  }
+  
+  return 0;
+}
+
+/***** Operasi Lain *****/
+/* Menambah elemen Tree di cabang Kiri dengan alokasi baru */
+/* IS : P boleh kosong */
+/* FS : P bertambah simpulnya, dengan X sebagai simpul daun terkiri */
+void AddDaunTerkiri (BinTree *P, infotype X){
+  if(*P == NULL) {
+    MakeTree(X, NULL, NULL, P);
+    return;
+  }
+  AddDaunTerkiri(&Left(*P), X);
+}
+
+/* IS : P tidak kosong, X adalah salah satu daun Pohon Biner P */
+/* FS : P bertambah simpulnya, dengan Y sebagai anak kiri X (jika Kiri) */
+/*      atau sebagai anak Kanan X (jika NOT Kiri) */
+void AddDaun (BinTree *P, infotype X, infotype Y, boolean Kiri){
+  address new_node, parent;
+  parent = BinSearch(*P, X);
+  if(parent != NULL){
+    new_node = Alokasi(Y);
+    if(Kiri){
+      parent->left = new_node;
+    }else{
+      parent->right = new_node;
+    }
+  }else{
+    printf("Daun tidak ditemukan\n");
+  }
+}
+
+
+/***** Operasi untuk Binary Search Tree *****/
+/* Mengirimkan alamat Node jika ada node dari P yang bernilai X */
+/* Mengirimkan Nil jika tidak ditemukan */
+address BinSearch (BinTree P, infotype X){
+  if(P == NULL) return NULL;
+  if(P->info == X) return P;
+
+  address found = BinSearch(Left(P), X);
+  if (found != NULL) return found;  
+  return BinSearch(Right(P), X);
+}
+
+/* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. */
+/* Belum ada simpul P yang bernilai X */
+void InsSearch (BinTree *P, infotype X){
+
+}

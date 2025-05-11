@@ -4,9 +4,9 @@
 int main()
 {
   BinTree tree = NULL;
-  BuildTree(&tree);
-
-  PrintTree(tree, 5);
+  AddDaunTerkiri(&tree, 'A');
+  AddDaunTerkiri(&tree, 'B');
+  PrintTree(tree, 0);
 
   
   return 0;
