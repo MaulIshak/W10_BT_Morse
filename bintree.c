@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 address Alokasi(infotype X)
 {
   address new_node =(address) malloc(sizeof(Node));
@@ -15,14 +14,17 @@ address Alokasi(infotype X)
   return new_node;
 }
 
-void DeAlokasi(address P)
+void DeAlokasi(address *P)
 {
-  free(P);
+  free(*P);
+  *P=NULL;
+  (*P)->left = NULL;
+  (*P)->right = NULL;
 }
 
 /* Menghasilkan sebuah pohon biner dari A, L dan R, jika alokasi berhasil */
 /* Menghasilkan pohon kosong (Nil) jika alokasi gagal */
-BinTree Tree (infotype Akar, BinTree L, BinTree R){
+BinTree N (BinTree L, infotype Akar, BinTree R){
   BinTree P = Alokasi(Akar);
   if (P != NULL) {
     Left(P) = L;
@@ -37,7 +39,7 @@ BinTree Tree (infotype Akar, BinTree L, BinTree R){
 /* Menghasilkan sebuah pohon biner dari A, L dan R, jika alokasi berhasil */
 /* Menghasilkan pohon kosong (Nil) jika alokasi gagal */
 void MakeTree (infotype Akar, BinTree L, BinTree R, BinTree *P){
-  *P = Tree(Akar, L, R);
+  *P = N(L, Akar , R);
 }
 
 /* Membentuk sebuah BinTree P dari pita karakter yang dibaca */
@@ -56,9 +58,9 @@ boolean IsEmpty (BinTree P){
 /* FS : Semua simpul P sudah diproses secara PreOrder : Akar, Kiri, Kanan */
 void PreOrder (BinTree P) {
   if (P != NULL) {
-    printf("%d ", Info(P));
-    PreOrder(Left(P));
+    printf("%c ", Info(P));
     PreOrder(Right(P));
+    PreOrder(Left(P));
   }
 }
 
@@ -67,9 +69,9 @@ void PreOrder (BinTree P) {
 /* FS : Semua simpul P sudah diproses secara InOrder : Kiri, Arak, Kanan */
 void InOrder (BinTree P){
   if (P != NULL) {
-    InOrder(Left(P));
-    printf("%d ", Info(P));
     InOrder(Right(P));
+    printf("%c ", Info(P));
+    InOrder(Left(P));
   }
 }
 /* Traversal PostOrder menggunakan Rekursif */
@@ -77,42 +79,66 @@ void InOrder (BinTree P){
 /* FS : Semua simpul P sudah diproses secara PostOrder :  Kiri, Kanan, Akar */
 void PostOrder (BinTree P){
   if (P != NULL) {
-    PostOrder(Left(P));
     PostOrder(Right(P));
-    printf("%d ", Info(P));
+    PostOrder(Left(P));
+    printf("%c ", Info(P));
   }
+}
+void LevelOrder(BinTree P){
+    if (P == Nil) {
+        printf("(pohon kosong)\n");
+        return;
+    }
+
+    // untuk sementara pakai kapasitas tetap
+    BinTree queue[MAX_QUEUE];
+    int front = 0, rear = 0;
+
+    queue[rear++] = P;
+
+    while (front < rear) {
+        BinTree current = queue[front++];
+
+        if (current == Nil) continue;
+
+        printf("%c ", Info(current));
+
+        if (rear < MAX_QUEUE) queue[rear++] = Right(current);
+        if (rear < MAX_QUEUE) queue[rear++] = Left(current);
+    }
+    printf("\n");
 }
 /* IS : P terdefinisi, h adalah jarak indentasi */
 /* FS : Semua simpul P sudah ditulis dengan indentasi */
 void PrintTree (BinTree P, int h){
-    (void) h;
-    int jmlNode = nbElmt(P);
-    BinTree *queue =(BinTree*)malloc(sizeof(Node)*jmlNode);
-    int front = 0, rear = 0;
-    queue[rear++] = P;
-    while (front < rear) {
-        BinTree current = queue[front++];
-        printf("info node: %c \n", Info(current));
-        if (Left(current) != NULL) {
-            printf("info node left son: %c \n", Info(Left(current)));
-        }
-        else {
-            printf("info node left son: (kosong) \n");
-        }
-        if (Right(current) != NULL) {
-            printf("info node right son: %c \n\n", Info(Right(current)));
-        }
-        else {
-            printf("info node left son: (kosong) \n\n");
-        }
-        if (Left(current) != NULL) {
-            queue[rear++] = Left(current);
-        }
-        if (Right(current) != NULL) {
-            queue[rear++] = Right(current);
-        }
-    }
-    printf("\n");
+  (void) h;
+  int jmlNode = nbElmt(P);
+  BinTree *queue =(BinTree*)malloc(sizeof(BinTree)*jmlNode);
+  int front = 0, rear = 0;
+  queue[rear++] = P;
+  while (front < rear) {
+      BinTree current = queue[front++];
+      printf("info node: %c \n", Info(current));
+      if (Left(current) != NULL) {
+          printf("info node left son: %c \n", Info(Left(current)));
+      }
+      else {
+          printf("info node left son: (kosong) \n");
+      }
+      if (Right(current) != NULL) {
+          printf("info node right son: %c \n\n", Info(Right(current)));
+      }
+      else {
+          printf("info node left son: (kosong) \n\n");
+      }
+      if (Left(current) != NULL) {
+          queue[rear++] = Left(current);
+      }
+      if (Right(current) != NULL) {
+          queue[rear++] = Right(current);
+      }
+  }
+  printf("\n");
 }
 
 /***** Search *****/
@@ -138,7 +164,16 @@ int nbElmt (BinTree P){
 
   return count;
 }
-
+int nbDaun (BinTree P){
+    if (P == Nil) {
+        return 0;  // Pohon kosong, tidak ada daun
+    }
+    if (Left(P) == Nil && Right(P) == Nil) {
+        return 1;  // Node ini adalah daun
+    }
+    // Rekursif ke kiri dan kanan
+    return nbDaun(Left(P)) + nbDaun(Right(P));
+}
 
 /* Mengirimkan level dari node X yang merupakan salah satu simpul dari */
 /* pohon biner P. Akar (P) levelnya adalah 1. Pohon tidak kosong */
@@ -155,6 +190,17 @@ int Level (BinTree P, infotype X){
   }
   
   return 0;
+}
+
+int Depth (BinTree P){
+      if (P == Nil) {
+        return 0;  // Pohon kosong, kedalamannya 0
+    } else {
+        int depthLeft = Depth(Left(P));
+        int depthRight = Depth(Right(P));
+        // 1 untuk akar, tambah maksimal dari kiri dan kanan
+        return 1 + (depthLeft > depthRight ? depthLeft : depthRight);
+    }
 }
 
 /***** Operasi Lain *****/
@@ -203,7 +249,7 @@ address BinSearch (BinTree P, infotype X){
 /* Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. */
 /* Belum ada simpul P yang bernilai X */
 void InsSearch (BinTree *P, infotype X){
-
+  
 }
 
 
@@ -221,5 +267,17 @@ void DelDaunTerkiri (BinTree *T, infotype *X) {
     } else {
       DelDaunTerkiri(&Left(*T), X);
     }
+  }
+}
+
+/* Menghapus seluruh elemen Tree secara Rekursif */
+/* IS : P terdefinisi */
+/* FS : Semua simpul P sudah dihapus secara PostOrder :  Kiri, Kanan, Akar */
+void DestroyTree (BinTree *P) {
+  if (*P != NULL) {
+    DestroyTree(&Left(*P));
+    DestroyTree(&Right(*P));
+    DeAlokasi(*P);
+    *P = NULL;
   }
 }
