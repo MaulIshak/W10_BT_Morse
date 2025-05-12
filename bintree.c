@@ -117,19 +117,7 @@ void PrintTree (BinTree P, int h){
   queue[rear++] = P;
   while (front < rear) {
       BinTree current = queue[front++];
-      printf("info node: %c \n", Info(current));
-      if (Left(current) != NULL) {
-          printf("info node left son: %c \n", Info(Left(current)));
-      }
-      else {
-          printf("info node left son: (kosong) \n");
-      }
-      if (Right(current) != NULL) {
-          printf("info node right son: %c \n\n", Info(Right(current)));
-      }
-      else {
-          printf("info node left son: (kosong) \n\n");
-      }
+      PrintNode(current);
       if (Left(current) != NULL) {
           queue[rear++] = Left(current);
       }
@@ -138,6 +126,22 @@ void PrintTree (BinTree P, int h){
       }
   }
   printf("\n");
+}
+
+void PrintNode(address node){
+    printf("info node: %c \n", Info(node));
+    if (Left(node) != NULL) {
+          printf("info node left son: %c \n", Info(Left(node)));
+    }
+    else {
+        printf("info node left son: (kosong) \n");
+    }
+    if (Right(node) != NULL) {
+        printf("info node right son: %c \n\n", Info(Right(node)));
+    }
+    else {
+          printf("info node left son: (kosong) \n\n");
+    }
 }
 
 /***** Search *****/

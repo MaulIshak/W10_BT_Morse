@@ -9,15 +9,188 @@ int FindMorsePath(BinTree P, infotype target, char* path, int depth);
 void TeksToMorse(BinTree P, char* teks);
 void MorseToTeks(BinTree P, char* morseStr);
 BinTree MorseTree();
+void Pause() {
+    printf("\nTekan enter untuk melanjutkan...");
+    getchar();
+}
 
 int main()
 {
     BinTree tree = NULL;
-    char* teks = ".--- - -.-";
-    tree = MorseTree();
-    MorseToTeks(tree, teks);
-    // TeksToMorse(tree, teks);
- 
+    BinTree temp = NULL;
+    int choice;
+    boolean isLoop = true;
+    infotype info1, info2;
+    char inputStr[256];
+
+    while (isLoop) {
+        system("cls");
+        printf("\n==== MENU TREE SANDI MORSE ====\n");
+        printf("1.\tInsert Node\n");
+        printf("2.\tPrint Tree\n");
+        printf("3.\tTraversal PreOrder\n");
+        printf("4.\tTraversal InOrder\n");
+        printf("5.\tTraversal PostOrder\n");
+        printf("6.\tTraversal LevelOrder\n");
+        printf("7.\tSearch Node Tree\n");
+        printf("8.\tJumlah Daun/Leaf\n");
+        printf("9.\tMencari Kedalaman Node Tree\n");
+        printf("10.\tMembandingkan 2 Node Tree\n");
+        printf("11.\tAuto Generate Morse Tree\n");
+        printf("12.\tTeks To Morse\n");
+        printf("13.\tMorse To Teks\n");
+        printf("14.\tExit\n");
+        printf("Pilih menu [1-14]: ");
+        scanf("%d", &choice);
+        getchar(); // hapus newline setelah input angka
+
+        switch (choice) {
+            case 1:
+                if(tree == NULL){
+                    printf("Tree kosong. Masukkan info root (karakter): ");
+                    scanf(" %c", &info1);
+                    getchar();
+                    AddDaunTerkiri(&tree, info1);
+                    printf("Root '%c' ditambahkan.\n", info1);
+                } else {
+                    printf("Masukkan info parent: ");
+                    scanf(" %c", &info1);
+                    getchar();
+                    if(Search(tree, info1)) {
+                        temp = BinSearch(tree, info1);
+                        printf("Parent ditemukan :\n");
+                        PrintNode(temp);
+                        printf("Masukkan info anak baru: ");
+                        scanf(" %c", &info2);
+                        getchar();
+                        printf("1. Kiri\n2. Kanan\nPilih posisi: ");
+                        int pos;
+                        scanf("%d", &pos);
+                        getchar();
+                        AddDaun(&tree, info1, info2, pos == 1);
+                        printf("Node '%c' ditambahkan ke %s dari '%c'.\n", info2, (pos == 1 ? "kiri" : "kanan"), info1);
+                    } else {
+                        printf("Parent '%c' tidak ditemukan.\n", info1);
+                    }
+                }
+                Pause();
+                break;
+
+            case 2:
+                PrintTree(tree, 2);
+                Pause();
+                break;
+
+            case 3:
+                PreOrder(tree);
+                printf("\n");
+                Pause();
+                break;
+
+            case 4:
+                InOrder(tree);
+                printf("\n");
+                Pause();
+                break;
+
+            case 5:
+                PostOrder(tree);
+                printf("\n");
+                Pause();
+                break;
+
+            case 6:
+                LevelOrder(tree);
+                Pause();
+                break;
+
+            case 7:
+                printf("Masukkan node yang ingin dicari: ");
+                scanf(" %c", &info1);
+                getchar();
+                if (Search(tree, info1)) {
+                    printf("Node '%c' ditemukan di tree.\n", info1);
+                    temp = BinSearch(tree, info1);
+                    PrintNode(temp);
+                } else {
+                    printf("Node '%c' TIDAK ditemukan di tree.\n", info1);
+                }
+                Pause();
+                break;
+
+            case 8:
+                printf("Jumlah daun: %d\n", nbDaun(tree));
+                Pause();
+                break;
+
+            case 9:
+                printf("Masukkan node yang ingin dicek kedalamannya: ");
+                scanf(" %c", &info1);
+                getchar();
+                printf("Level dari node '%c' adalah %d\n", info1, Level(tree, info1));
+                Pause();
+                break;
+
+            case 10:
+                printf("Masukkan dua node yang ingin dibandingkan: \n");
+                scanf(" %c %c", &info1, &info2);
+                getchar();
+                int level1 = Level(tree, info1);
+                int level2 = Level(tree, info2);
+                if (level1 > 0 && level2 > 0) {
+                    if (level1 == level2)
+                        printf("Kedua node berada pada level yang sama (%d)\n", level1);
+                    else
+                        printf("Node '%c' level %d, node '%c' level %d\n", info1, level1, info2, level2);
+                } else {
+                    printf("Salah satu atau kedua node tidak ditemukan.\n");
+                }
+                Pause();
+                break;
+
+            case 11:
+                tree = MorseTree();
+                printf("Morse tree berhasil dibentuk.\n");
+                Pause();
+                break;
+
+            case 12:
+                if (tree == NULL) {
+                    printf("Morse tree belum terbentuk! Gunakan opsi 11 terlebih dahulu.\n");
+                    Pause();
+                    break;
+                }
+                printf("Masukkan teks: ");
+                fgets(inputStr, sizeof(inputStr), stdin);
+                inputStr[strcspn(inputStr, "\n")] = 0; // hapus newline
+                TeksToMorse(tree, inputStr);
+                Pause();
+                break;
+
+            case 13:
+                if (tree == NULL) {
+                    printf("Morse tree belum terbentuk! Gunakan opsi 11 terlebih dahulu.\n");
+                    Pause();
+                    break;
+                }
+                printf("Masukkan kode morse (gunakan . dan -): ");
+                fgets(inputStr, sizeof(inputStr), stdin);
+                inputStr[strcspn(inputStr, "\n")] = 0;
+                MorseToTeks(tree, inputStr);
+                Pause();
+                break;
+
+            case 14:
+                isLoop = false;
+                printf("Keluar dari program...\n");
+                break;
+
+            default:
+                printf("Pilihan tidak valid. Silakan pilih 1 - 14.\n");
+                Pause();
+                break;
+        }
+    }
 
     printf("Program selesai");
     return 0;
