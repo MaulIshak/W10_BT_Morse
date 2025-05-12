@@ -156,7 +156,7 @@ int main()
 
             case 12:
                 if (tree == NULL) {
-                    printf("Morse tree belum terbentuk! Gunakan opsi 11 terlebih dahulu.\n");
+                    printf("Tree masih kosong.\n");
                     Pause();
                     break;
                 }
@@ -169,7 +169,7 @@ int main()
 
             case 13:
                 if (tree == NULL) {
-                    printf("Morse tree belum terbentuk! Gunakan opsi 11 terlebih dahulu.\n");
+                    printf("Tree masih kosong.\n");
                     Pause();
                     break;
                 }
