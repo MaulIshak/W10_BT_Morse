@@ -17,7 +17,7 @@
 #define Next(L) (L)->next
 #define MAX_QUEUE 256
 
-typedef int infotype;
+typedef char infotype;
 typedef struct tElmtTree *address;
 typedef struct tElmtTree {
 	infotype info;

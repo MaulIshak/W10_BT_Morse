@@ -106,11 +106,11 @@ int main()
 
             case 7:
                 printf("Masukkan node yang ingin dicari: ");
-                scanf(" %c", &info1);
+                scanf("%c", &info1);
                 getchar();
-                if (Search(tree, info1)) {
+                temp = BinSearch(tree, info1);
+                if (temp != NULL) {
                     printf("Node '%c' ditemukan di tree.\n", info1);
-                    temp = BinSearch(tree, info1);
                     PrintNode(temp);
                 } else {
                     printf("Node '%c' TIDAK ditemukan di tree.\n", info1);
@@ -125,7 +125,7 @@ int main()
 
             case 9:
                 printf("Masukkan node yang ingin dicek kedalamannya: ");
-                scanf(" %c", &info1);
+                scanf("%c", &info1);
                 getchar();
                 printf("Level dari node '%c' adalah %d\n", info1, Level(tree, info1));
                 Pause();
