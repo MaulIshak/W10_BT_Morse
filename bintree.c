@@ -59,8 +59,8 @@ boolean IsEmpty (BinTree P){
 void PreOrder (BinTree P) {
   if (P != NULL) {
     printf("%c ", Info(P));
-    PreOrder(Right(P));
     PreOrder(Left(P));
+    PreOrder(Right(P));
   }
 }
 
@@ -69,9 +69,9 @@ void PreOrder (BinTree P) {
 /* FS : Semua simpul P sudah diproses secara InOrder : Kiri, Arak, Kanan */
 void InOrder (BinTree P){
   if (P != NULL) {
-    InOrder(Right(P));
-    printf("%c ", Info(P));
     InOrder(Left(P));
+    printf("%c ", Info(P));
+    InOrder(Right(P));
   }
 }
 /* Traversal PostOrder menggunakan Rekursif */
@@ -79,8 +79,8 @@ void InOrder (BinTree P){
 /* FS : Semua simpul P sudah diproses secara PostOrder :  Kiri, Kanan, Akar */
 void PostOrder (BinTree P){
   if (P != NULL) {
-    PostOrder(Right(P));
     PostOrder(Left(P));
+    PostOrder(Right(P));
     printf("%c ", Info(P));
   }
 }
@@ -90,7 +90,6 @@ void LevelOrder(BinTree P){
         return;
     }
 
-    // untuk sementara pakai kapasitas tetap
     BinTree queue[MAX_QUEUE];
     int front = 0, rear = 0;
 
@@ -103,8 +102,8 @@ void LevelOrder(BinTree P){
 
         printf("%c ", Info(current));
 
-        if (rear < MAX_QUEUE) queue[rear++] = Right(current);
         if (rear < MAX_QUEUE) queue[rear++] = Left(current);
+        if (rear < MAX_QUEUE) queue[rear++] = Right(current);
     }
     printf("\n");
 }
@@ -155,14 +154,10 @@ boolean Search (BinTree P, infotype X){
 
 /***** Fungsi Lain *****/
 int nbElmt (BinTree P){
-  int count = 0;
-  if (P != NULL) {
-    count++;
-    nbElmt(Left(P));
-    nbElmt(Right(P));
+  if (P == NULL) {
+    return 0;
   }
-
-  return count;
+  return 1 + nbElmt(Left(P)) + nbElmt(Right(P));
 }
 int nbDaun (BinTree P){
     if (P == Nil) {
@@ -229,7 +224,7 @@ void AddDaun (BinTree *P, infotype X, infotype Y, boolean Kiri){
       parent->right = new_node;
     }
   }else{
-    printf("Daun tidak ditemukan\n");
+    printf("Parent tidak ditemukan\n");
   }
 }
 

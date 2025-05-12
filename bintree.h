@@ -115,18 +115,18 @@ int Depth (BinTree P);
 /* Mengirimkan Nilai terbesar dari dua data */
 
 /***** Operasi Lain *****/
-void AddDaunTerkiri (BinTree *P, infotype X);
 /* Menambah elemen Tree di cabang Kiri dengan alokasi baru */
 /* IS : P boleh kosong */
 /* FS : P bertambah simpulnya, dengan X sebagai simpul daun terkiri */
-void AddDaun (BinTree *P, infotype X, infotype Y, boolean Kiri);
+void AddDaunTerkiri (BinTree *P, infotype X);
 /* IS : P tidak kosong, X adalah salah satu daun Pohon Biner P */
 /* FS : P bertambah simpulnya, dengan Y sebagai anak kiri X (jika Kiri) */
 /*      atau sebagai anak Kanan X (jika NOT Kiri) */
-void DelDaunTerkiri (BinTree *T, infotype *X);
+void AddDaun (BinTree *P, infotype X, infotype Y, boolean Kiri);
 /* IS : P TIDAK Kosong */
 /* FS : P dihapus daun terkirinya, dan didealokasi, dengan X adalah info */
 /*      yang semula disimpan pada daun terkiri yang dihapus */
+void DelDaunTerkiri (BinTree *T, infotype *X);
 // void DelDaun (BinTree *T, infotype X);
 /* IS : P TIDAK kosong, X adalah salah satu daun */
 /* FS : X dihapus dari P */
