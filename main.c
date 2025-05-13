@@ -13,6 +13,14 @@ void Pause() {
     printf("\nTekan enter untuk melanjutkan...");
     getchar();
 }
+// Fungsi membandingkan 2 subtree apakah identik struktur dan nilainya
+boolean IsTreeEqual(BinTree A, BinTree B) {
+    if (A == Nil && B == Nil) return true;
+    if (A == Nil || B == Nil) return false;
+    if (Info(A) != Info(B)) return false;
+    return IsTreeEqual(Left(A), Left(B)) && IsTreeEqual(Right(A), Right(B));
+}
+
 
 int main()
 {
@@ -132,16 +140,18 @@ int main()
                 break;
 
             case 10:
+              // Bandingkan 2 subtree berdasarkan node info1 dan info2
                 printf("Masukkan dua node yang ingin dibandingkan: \n");
                 scanf(" %c %c", &info1, &info2);
                 getchar();
-                int level1 = Level(tree, info1);
-                int level2 = Level(tree, info2);
-                if (level1 > 0 && level2 > 0) {
-                    if (level1 == level2)
-                        printf("Kedua node berada pada level yang sama (%d)\n", level1);
-                    else
-                        printf("Node '%c' level %d, node '%c' level %d\n", info1, level1, info2, level2);
+                BinTree t1 = BinSearch(tree, info1);
+                BinTree t2 = BinSearch(tree, info2);
+                if (t1 != Nil && t2 != Nil) {
+                    if (IsTreeEqual(t1, t2)) {
+                        printf("Subtree dari '%c' dan '%c' identik.\n", info1, info2);
+                    } else {
+                        printf("Subtree dari '%c' dan '%c' berbeda.\n", info1, info2);
+                    }
                 } else {
                     printf("Salah satu atau kedua node tidak ditemukan.\n");
                 }
